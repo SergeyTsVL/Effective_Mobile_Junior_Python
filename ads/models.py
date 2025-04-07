@@ -1,4 +1,4 @@
-from datetime import timezone
+from datetime import timezone, datetime
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -7,7 +7,7 @@ class Ad(models.Model):
     """
     Этот класс определяет модель для хранения информации об объявлениях в базе данных.
     """
-    id = models.AutoField(primary_key=True)
+    # id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_name')
     title = models.TextField()
     description = models.TextField()
@@ -43,7 +43,7 @@ class ExchangeProposal(models.Model):
         ('cancelled', 'Отменено')
     ]
 
-    id = models.AutoField(primary_key=True)
+    # id = models.AutoField(primary_key=True)
     ad_sender = models.ForeignKey(
         Ad,
         related_name='sent_proposals',
@@ -56,10 +56,7 @@ class ExchangeProposal(models.Model):
         on_delete=models.CASCADE,
         verbose_name='Объявление получателя'
     )
-    comment = models.TextField(
-        blank=True,
-        verbose_name='Комментарий'
-    )
+    comment = models.TextField()
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
@@ -67,7 +64,7 @@ class ExchangeProposal(models.Model):
         verbose_name='Статус'
     )
     created_at = models.DateTimeField(
-        default=timezone.now,
+        default=datetime.now(timezone.utc),
         verbose_name='Дата создания'
     )
     # class Meta:

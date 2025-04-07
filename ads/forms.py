@@ -1,5 +1,5 @@
 from django import forms
-from .models import Ad
+from .models import Ad, ExchangeProposal
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -14,7 +14,7 @@ class AdForm(forms.ModelForm):
     """
     class Meta:
         model = Ad
-        fields = ['id', 'user', 'title', 'description', 'image_url', 'category', 'status', 'created_at']
+        fields = ['id', 'user', 'title', 'description', 'image_url', 'category', 'status']
 
 class ExchangeProposalForm(forms.ModelForm):
     """
@@ -25,8 +25,8 @@ class ExchangeProposalForm(forms.ModelForm):
     данном случае это заголовок объявления (title), пользователь (user), ...
     """
     class Meta:
-        model = Ad
-        fields = ['id', 'ad_sender', 'ad_receiver', 'comment', 'status', 'created_at']
+        model = ExchangeProposal
+        fields = ['id', 'comment', 'status']
 
 class SignUpForm(UserCreationForm):
     """

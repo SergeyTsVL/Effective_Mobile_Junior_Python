@@ -12,7 +12,7 @@ def logout_view(request):
     Этот метод выполняет выход пользователя из системы и перенаправляет его на домашнюю страницу.
     """
     logout(request)
-    return redirect('templates/home')
+    return redirect('home')
 
 def home(request):
     """
@@ -29,7 +29,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('/board')
+            return redirect('home')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})

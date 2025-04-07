@@ -26,7 +26,7 @@
 <body>
     <div class="navbar">
         <a href="{% url 'home' %}">Домашняя</a>
-<!--        <a href="{% url 'board:advertisement_list' %}">Заявки на доставку</a>-->
+        <a>Заявки на доставку</a>
         {% if user.is_authenticated %}
             <a href="{% url 'logout' %}">Выход из системы</a>
         {% else %}

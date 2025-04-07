@@ -1,14 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Добавить заявку</h2>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-  <h2>Добавить заявку</h2>  <h2>Добавить заявку</h2>  <h2>Добавить заявку</h2>  <h2>Добавить заявку</h2>
-</body>
-</html>
+<h1>Список заявок на доставку</h1>
+
+{% if user.is_authenticated %}
+    <a href="{% url 'ads:add_ad' %}"><button type="submit">Добавить заявку</button></a>
+
+{% endif %}
+<ul>
+  {% for ad in ads %}
+
+    <h2><a>Заявка №: {{ ad.id }} / Будут доставлены: {{ ad.title }} </a></h2>
+    <li>
+      <a>Дата приема заявки: {{ ad.created_at }}</a>
+    </li>
+    <li>
+      <a >Статус доставки: "{{ ad.status }}"</a>
+    </li>
+
+  {% endfor %}
+</ul>
+
 {% endblock %}

@@ -2,18 +2,31 @@ from datetime import timezone, datetime
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.template.backends import django
+
 
 class Ad(models.Model):
     """
     Этот класс определяет модель для хранения информации об объявлениях в базе данных.
     """
+    STATUS_CHOICES = [
+        ('pending', 'В ожидании'),
+        ('accepted', 'Принято'),
+        ('rejected', 'Отклонено'),
+        ('cancelled', 'Отменено')
+    ]
     # id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_name')
     title = models.TextField()
     description = models.TextField()
     image_url = models.URLField(max_length=200, blank=True, null=True)
     category = models.TextField()
-    status = models.CharField(max_length=255)
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='pending',
+        verbose_name='Статус'
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     # class Meta:
@@ -63,8 +76,13 @@ class ExchangeProposal(models.Model):
         default='pending',
         verbose_name='Статус'
     )
+    # created_at = models.DateTimeField(
+    #     # default=datetime.now(timezone.utc),
+    #     default=django.utils.timezone.now,
+    #     verbose_name='Дата создания'
+    # )
     created_at = models.DateTimeField(
-        default=datetime.now(timezone.utc),
+        auto_now_add=True,  # Используем auto_now_add вместо default
         verbose_name='Дата создания'
     )
     # class Meta:

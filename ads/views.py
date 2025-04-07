@@ -1,5 +1,5 @@
 from .models import Ad
-from .forms import Ad, AdForm
+from .forms import AdForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect
@@ -53,3 +53,10 @@ def add_ad(request):
     else:
         form = AdForm()
     return render(request, 'ads_ads/add_ad.html', {'form': form})
+
+def ad_list(request):
+    """
+    Вызывает страницу advertisement_list.html.
+    """
+    ads = Ad.objects.all()
+    return render(request, 'ads_ads/ad_list.html', {'ads': ads})

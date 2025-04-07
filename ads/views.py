@@ -1,5 +1,5 @@
 from .models import Ad
-from .forms import Ad
+from .forms import Ad, AdForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect
@@ -33,3 +33,23 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
+
+@login_required  # Проверяет регистрацию пользователя
+def add_ad(request):
+    """
+    Этот метод считывает данные объектов из класса Advertisement, проверяет были ли запрос "POST", обрабатывает
+    данные формы, если все поля заполнены полностью, корректны и содержат все необходимые данные. Затем, при
+    обавлении данных, автоматически устанавливает автора как текущего авторизованного пользователя. Если запроса "POST"
+    не было, то возвращаемся к предыдущей странице без изменений.
+    """
+    if request.method == "POST":
+        form = AdForm(request.POST)
+        if form.is_valid():
+            ad = form.save(commit=False)
+            # ad.name = request.user
+            ad.status = 'заявка создана'
+            ad.save()
+            return redirect('ads:add_ad')
+    else:
+        form = AdForm()
+    return render(request, 'ads_ads/add_ad.html', {'form': form})

@@ -21,7 +21,8 @@ from ads import views as board_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('accounts/logout/', board_views.logout_view, name='logout'),
+    path('ads_ads/', include('ads.urls', namespace='ads')),
+    path('accounts/logout/', board_views.logout_view, name='logout'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', board_views.home, name='home'),
     path('signup/', board_views.signup, name='signup'),

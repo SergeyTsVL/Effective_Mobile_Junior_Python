@@ -26,7 +26,8 @@
 <body>
     <div class="navbar">
         <a href="{% url 'home' %}">Домашняя</a>
-        <a>Заявки на доставку</a>
+        <a href="{% url 'ads:add_ad' %}">Заявки на доставку</a
+        <a>Обьявления</a>
         {% if user.is_authenticated %}
             <a href="{% url 'logout' %}">Выход из системы</a>
         {% else %}

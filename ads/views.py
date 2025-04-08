@@ -1,3 +1,7 @@
+from urllib import request
+from django.views.generic import TemplateView, ListView
+from django.db.models import Q
+
 from .models import Ad
 from .forms import AdForm
 from django.contrib.auth.decorators import login_required
@@ -39,7 +43,7 @@ def add_ad(request):
     """
     Этот метод считывает данные объектов из класса Advertisement, проверяет были ли запрос "POST", обрабатывает
     данные формы, если все поля заполнены полностью, корректны и содержат все необходимые данные. Затем, при
-    обавлении данных, автоматически устанавливает автора как текущего авторизованного пользователя. Если запроса "POST"
+    добавлении данных, автоматически устанавливает автора как текущего авторизованного пользователя. Если запроса "POST"
     не было, то возвращаемся к предыдущей странице без изменений.
     """
     if request.method == "POST":
@@ -58,5 +62,24 @@ def ad_list(request):
     """
     Вызывает страницу advertisement_list.html.
     """
+    # # Фильтрация по частичному совпадению
+    # ads = Ad.objects.filter(title__icontains='доставка')
     ads = Ad.objects.all()
     return render(request, 'ads_ads/ad_list.html', {'ads': ads})
+
+
+class SearchResultsView(ListView):
+    model = Ad
+    template_name = 'ads_ads/search_results.html'
+
+    def get_queryset(self):  # новый
+        query = self.request.GET.get('q')
+        object_list = Ad.objects.filter(
+            Q(title__icontains=query) | Q(description__icontains=query)
+        )
+        return object_list
+
+class HomePageView(TemplateView):
+    template_name = 'ads_ads/search.html'
+
+

@@ -11,12 +11,12 @@
 <ul>
   {% for ad in ads %}
 
-    <h2><a>Заявка №: {{ ad.id }} / Будут доставлены: {{ ad.title }} </a></h2>
+    <h2 ><a href="{% url 'ads:ad_detail' pk=ad.pk %}">Заявка №: {{ ad.id }} / Будут доставлены: {{ ad.title }} </a></h2>
     <li>
-      <a>Дата приема заявки: {{ ad.created_at }}</a>
+      <a href="{% url 'ads:ad_detail' pk=ad.pk %}">Дата приема заявки: {{ ad.created_at }}</a>
     </li>
     <li>
-      <a >Статус доставки: "{{ ad.status }}"</a>
+      <a href="{% url 'ads:ad_detail' pk=ad.pk %}" >Статус доставки: "{{ ad.status }}"</a>
     </li>
 
   {% endfor %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ ad.title }}</h1>
+<p>{{ ad.description }}</p>
+<div style="display:flex; flex-direction:column">
+    <span>
+        <a href="{% url 'ads:edit_ad' ad.pk %}"><button type="submit">Редактировать</button></a>
+
+    </span>
+    <span>
+        <a href="{% url 'ads:delete_ad' ad.pk %}"><button type="submit">Удалить</button></a>
+    </span>
+    <span>
+        <a>Редактирование удаление не возможно если заявка изменила статус!</a>
+    </span>
+    <span>
+        <a>Статусы блокирования: "товар передан в доставку", "товар доставлен".</a>
+    </span>
+
+</div>
+{% endblock %}

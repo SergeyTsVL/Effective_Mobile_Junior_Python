@@ -8,7 +8,7 @@
 <ul>
   {% for i in object_list %}
     <li>
-      {{ i.title }}, {{ i.description }}
+      Номер объявления: {{ i.id }}, Заголовок: {{ i.title }}, Описание: {{ i.description }}
     </li>
   {% endfor %}
 </ul>

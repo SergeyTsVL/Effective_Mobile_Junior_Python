@@ -10,6 +10,6 @@ python manage.py makemigrations
 python manage.py migrate
 
 python manage.py runserver
-<a href="{% url 'board:advertisement_list' %}">Заявки на доставку</a>
+
 
 python manage.py createsuperuser

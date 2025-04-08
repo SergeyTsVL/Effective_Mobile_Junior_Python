@@ -16,7 +16,7 @@ class Ad(models.Model):
         ('cancelled', 'Отменено')
     ]
     # id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_name')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ads')   # created_name
     title = models.TextField()
     description = models.TextField()
     image_url = models.URLField(max_length=200, blank=True, null=True)
@@ -25,7 +25,7 @@ class Ad(models.Model):
         max_length=20,
         choices=STATUS_CHOICES,
         default='pending',
-        verbose_name='Статус'
+        verbose_name='Статус',
     )
     created_at = models.DateTimeField(auto_now_add=True)
 

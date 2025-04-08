@@ -1,7 +1,9 @@
 from urllib import request
+
+# from django.core.checks import messages
 from django.views.generic import TemplateView, ListView
 from django.db.models import Q
-
+from django.contrib import messages
 from .models import Ad
 from .forms import AdForm
 from django.contrib.auth.decorators import login_required
@@ -123,16 +125,18 @@ def edit_ad(request, pk):
     :return:
     """
     ads = Ad.objects.get(pk=pk)
-    if ads.status != 'Принято':
-        if request.method == "POST" and ads.user != request.user:   # Проверяет является ли пользователь автором
+    if ads.status != 'Принято' and ads.user == request.user:      # Проверяет является ли пользователь автором
+        if request.method == "POST":
             form = AdForm(request.POST, request.FILES, instance=ads)
             if form.is_valid():
+                # ads.user = request.user
                 form.save()
                 img_obj = form.instance
                 # Перенаправляет на страницу с сохраненными исправлениями.
                 return redirect('ads:ad_detail', pk=img_obj.pk)
         else:
             # вызов функции которая отобразит в браузере указанный шаблон с данными формы и объявления.
+            messages.error(request, 'Вы можете редактировать только свои объявления')
             form = AdForm(instance=ads)
         return render(request, 'ads_ads/edit_ad.html',
                       {'form': form, 'ads': ads})

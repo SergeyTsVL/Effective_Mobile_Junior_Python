@@ -14,5 +14,5 @@ urlpatterns = [
     path('delete/<int:pk>/', views.delete_ad, name='delete_ad'),
     path('ad/<int:pk>/', views.ad_detail, name='ad_detail'),
     path('create_proposal', views.create_proposal, name='create_proposal'),
-    # path('proposal/<int:proposal_id>/manage/', views.manage_proposal, name='manage_proposal'),
+    path('add_proposal', views.add_proposal, name='add_proposal'),
 ]

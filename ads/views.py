@@ -157,7 +157,15 @@ def create_proposal(request):
         form = ExchangeProposalForm()
     return render(request, 'ads_ads/create_proposal.html', {'form': form})
 
-    # form = ExchangeProposal.objects.all()
+@login_required
+def add_proposal(request):
+    """
+    Вызывает страницу advertisement_list.html.
+    """
+    # # Фильтрация по частичному совпадению
+    # ads = Ad.objects.filter(title__icontains='доставка')
+    exc = ExchangeProposal.objects.all()
+    return render(request, 'ads_ads/manage_proposal.html', {'exc': exc})
 
 
 

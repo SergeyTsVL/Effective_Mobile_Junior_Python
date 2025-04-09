@@ -6,7 +6,7 @@ pip install django
 python manage.py startapp ads
 
 
-python manage.py makemigrations
+python manage.py makemigrations --merge
 python manage.py migrate
 
 python manage.py runserver

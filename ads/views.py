@@ -35,7 +35,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home')
+            return redirect('/ads')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
@@ -166,7 +166,11 @@ def add_proposal(request):
     exc = ExchangeProposal.objects.all()
     return render(request, 'ads_ads/manage_proposal.html', {'exc': exc})
 
-
+def profile(request):
+    """
+    Вызывает страницу home.html .
+    """
+    return render(request, 'home.html')
 
 
 

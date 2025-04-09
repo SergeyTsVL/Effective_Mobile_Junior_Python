@@ -2,9 +2,9 @@ from django.urls import path
 from . import views
 from .views import SearchResultsView, HomePageView
 
-# from .views import AdListView
 
 app_name = 'ads'
+
 urlpatterns = [
     path('', views.add_ad, name='add_ad'),
     path('ad_list/', views.ad_list, name='ad_list'),
@@ -15,4 +15,5 @@ urlpatterns = [
     path('ad/<int:pk>/', views.ad_detail, name='ad_detail'),
     path('create_proposal', views.create_proposal, name='create_proposal'),
     path('add_proposal', views.add_proposal, name='add_proposal'),
+    path('profile/', views.logout_view, name='logout_view'),
 ]

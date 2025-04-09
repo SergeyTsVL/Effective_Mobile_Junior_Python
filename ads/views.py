@@ -162,10 +162,10 @@ def add_proposal(request):
     """
     Вызывает страницу advertisement_list.html.
     """
-    # # Фильтрация по частичному совпадению
-    # ads = Ad.objects.filter(title__icontains='доставка')
+
     exc = ExchangeProposal.objects.all()
     return render(request, 'ads_ads/manage_proposal.html', {'exc': exc})
+
 
 
 

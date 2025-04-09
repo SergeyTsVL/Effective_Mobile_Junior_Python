@@ -35,7 +35,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('/ads')
+            return redirect('/home')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
@@ -172,93 +172,3 @@ def profile(request):
     """
     return render(request, 'home.html')
 
-
-
-
-
-
-
-
-# from django.shortcuts import render, redirect
-# from django.contrib.auth.decorators import login_required
-# from django.http import JsonResponse
-# from django.core.exceptions import ObjectDoesNotExist
-# from .models import ExchangeProposal
-# from .forms import ExchangeProposalForm
-#
-#
-# @login_required
-# def create_proposal(request, ad_id):
-#     if request.method == 'POST':
-#         try:
-#             ad = Ad.objects.get(id=ad_id)
-#             form = ExchangeProposalForm(request.POST)
-#
-#             if form.is_valid():
-#                 proposal = form.save(commit=False)
-#                 proposal.ad_sender = ad
-#                 proposal.save()
-#
-#                 return JsonResponse({
-#                     'status': 'success',
-#                     'message': 'Предложение создано успешно'
-#                 })
-#
-#         except ObjectDoesNotExist:
-#             return JsonResponse({
-#                 'status': 'error',
-#                 'message': 'Объявление не найдено'
-#             }, status=404)
-#
-#         except Exception as e:
-#             return JsonResponse({
-#                 'status': 'error',
-#                 'message': str(e)
-#             }, status=500)
-#
-#     return render(request, 'ads_ads/create_proposal.html')
-#
-#
-# @login_required
-# def manage_proposal(request, proposal_id):
-#     try:
-#         proposal = ExchangeProposal.objects.get(id=proposal_id)
-#
-#         if request.method == 'POST':
-#             action = request.POST.get('action')
-#
-#             if action == 'accept':
-#                 if proposal.reject():
-#                     return JsonResponse({
-#                         'status': 'success',
-#                         'message': 'Предложение принято'
-#                     })
-#             elif action == 'reject':
-#                 if proposal.reject():
-#                     return JsonResponse({
-#                         'status': 'success',
-#                         'message': 'Предложение отклонено'
-#                     })
-#             elif action == 'cancel':
-#                 if proposal.cancel():
-#                     return JsonResponse({
-#                         'status': 'success',
-#                         'message': 'Предложение отменено'
-#                     })
-#
-#             return JsonResponse({
-#                 'status': 'error',
-#                 'message': 'Неверное действие'
-#             }, status=400)
-#
-#         return render(request, 'ads_ads/manage_proposal.html', {
-#             'proposal': proposal
-#         })
-#
-#     except ObjectDoesNotExist:
-#         return JsonResponse({
-#             'status': 'error',
-#             'message': 'Предложение не найдено'
-#         }, status=404)
-#
-#

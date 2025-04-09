@@ -28,26 +28,6 @@ class ExchangeProposalForm(forms.ModelForm):
         model = ExchangeProposal
         fields = ['id', 'ad_sender', 'ad_receiver', 'comment', 'status']
 
-
-# from django import forms
-# from .models import ExchangeProposal
-#
-# class ExchangeProposalForm(forms.ModelForm):
-#     class Meta:
-#         model = ExchangeProposal
-#         fields = ('ad_receiver', 'comment')
-#         labels = {
-#             'ad_receiver': 'Объявление для обмена',
-#             'comment': 'Комментарий'
-#         }
-#         help_texts = {
-#             'comment': 'Введите ваше предложение об обмене'
-#         }
-#
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self.fields['ad_receiver'].queryset = Ad.objects.filter(is_active=True)
-
 class SignUpForm(UserCreationForm):
     """
     Этот класс SignUpForm представляет собой кастомную форму регистрации пользователя, которая расширяет стандартную

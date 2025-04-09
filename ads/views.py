@@ -4,8 +4,8 @@ from urllib import request
 from django.views.generic import TemplateView, ListView
 from django.db.models import Q
 from django.contrib import messages
-from .models import Ad
-from .forms import AdForm
+from .models import Ad, ExchangeProposal
+from .forms import AdForm, ExchangeProposalForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect, get_object_or_404
@@ -53,7 +53,7 @@ def add_ad(request):
         if form.is_valid():
             ad = form.save(commit=False)
             # ad.name = request.user
-            ad.status = 'заявка создана'
+            ad.status = 'В ожидании'
             ad.save()
             return redirect('ads:add_ad')
     else:
@@ -143,3 +143,110 @@ def edit_ad(request, pk):
     return redirect('ads:ad_detail', pk=pk)
 
 
+@login_required
+def create_proposal(request):
+    if request.method == "POST":
+        form = ExchangeProposalForm(request.POST)
+        if form.is_valid():
+            ad = form.save(commit=False)
+            # ad.name = request.user
+            ad.status = 'В ожидании'
+            ad.save()
+            return redirect('ads:create_proposal')
+    else:
+        form = ExchangeProposalForm()
+    return render(request, 'ads_ads/create_proposal.html', {'form': form})
+
+    # form = ExchangeProposal.objects.all()
+
+
+
+
+
+
+
+
+
+# from django.shortcuts import render, redirect
+# from django.contrib.auth.decorators import login_required
+# from django.http import JsonResponse
+# from django.core.exceptions import ObjectDoesNotExist
+# from .models import ExchangeProposal
+# from .forms import ExchangeProposalForm
+#
+#
+# @login_required
+# def create_proposal(request, ad_id):
+#     if request.method == 'POST':
+#         try:
+#             ad = Ad.objects.get(id=ad_id)
+#             form = ExchangeProposalForm(request.POST)
+#
+#             if form.is_valid():
+#                 proposal = form.save(commit=False)
+#                 proposal.ad_sender = ad
+#                 proposal.save()
+#
+#                 return JsonResponse({
+#                     'status': 'success',
+#                     'message': 'Предложение создано успешно'
+#                 })
+#
+#         except ObjectDoesNotExist:
+#             return JsonResponse({
+#                 'status': 'error',
+#                 'message': 'Объявление не найдено'
+#             }, status=404)
+#
+#         except Exception as e:
+#             return JsonResponse({
+#                 'status': 'error',
+#                 'message': str(e)
+#             }, status=500)
+#
+#     return render(request, 'ads_ads/create_proposal.html')
+#
+#
+# @login_required
+# def manage_proposal(request, proposal_id):
+#     try:
+#         proposal = ExchangeProposal.objects.get(id=proposal_id)
+#
+#         if request.method == 'POST':
+#             action = request.POST.get('action')
+#
+#             if action == 'accept':
+#                 if proposal.reject():
+#                     return JsonResponse({
+#                         'status': 'success',
+#                         'message': 'Предложение принято'
+#                     })
+#             elif action == 'reject':
+#                 if proposal.reject():
+#                     return JsonResponse({
+#                         'status': 'success',
+#                         'message': 'Предложение отклонено'
+#                     })
+#             elif action == 'cancel':
+#                 if proposal.cancel():
+#                     return JsonResponse({
+#                         'status': 'success',
+#                         'message': 'Предложение отменено'
+#                     })
+#
+#             return JsonResponse({
+#                 'status': 'error',
+#                 'message': 'Неверное действие'
+#             }, status=400)
+#
+#         return render(request, 'ads_ads/manage_proposal.html', {
+#             'proposal': proposal
+#         })
+#
+#     except ObjectDoesNotExist:
+#         return JsonResponse({
+#             'status': 'error',
+#             'message': 'Предложение не найдено'
+#         }, status=404)
+#
+#

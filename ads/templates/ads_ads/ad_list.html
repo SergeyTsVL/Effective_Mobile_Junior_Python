@@ -2,6 +2,9 @@
 
 {% block content %}
 
+
+
+
 <h1>Список заявок на доставку</h1>
 
 {% if user.is_authenticated %}
@@ -11,12 +14,15 @@
 <ul>
   {% for ad in ads %}
 
-    <h2 ><a href="{% url 'ads:ad_detail' pk=ad.pk %}">Заявка №: {{ ad.id }} / Будут доставлены: {{ ad.title }} </a></h2>
+    <h2 ><a href="{% url 'ads:ad_detail' pk=ad.pk %}">Объявление №: {{ ad.id }} / Заголовок объявления: {{ ad.title }} </a></h2>
     <li>
-      <a href="{% url 'ads:ad_detail' pk=ad.pk %}">Дата приема заявки: {{ ad.created_at }}</a>
+      <a>Дата публикации: {{ ad.created_at }}</a>
     </li>
     <li>
-      <a href="{% url 'ads:ad_detail' pk=ad.pk %}" >Статус доставки: "{{ ad.status }}"</a>
+      <a>Статус объявления: "{{ ad.status }}"</a>
+    </li>
+    <li>
+      <a>Автор: "{{ ad.user }}"</a>
     </li>
 
   {% endfor %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="proposal-details">
+    <h2>Предложение обмена</h2>
+    <p>Отправитель: {{ proposal.ad_sender.title }}</p>
+    <p>Получатель: {{ proposal.ad_receiver.title }}</p>
+    <p>Комментарий: {{ proposal.comment }}</p>
+    <p>Статус: {{ proposal.get_status_display }}</p>
+
+    {% if proposal.can_be_modified %}
+    <form method="post" id="manage-proposal-form">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="accept">
+        <button type="submit" class="btn btn-success">Принять</button>
+    </form>
+
+    <form method="post" id="reject-proposal-form">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="reject">
+        <button type="submit" class="btn btn-danger">Отклонить</button>
+    </form>
+
+    <form method="post" id="cancel-proposal-form">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="cancel">
+        <button type="submit" class="btn btn-warning">Отменить</button>
+    </form>
+    {% endif %}
+</div>
+
+<script>
+document.getElementById('manage-proposal-form').onsubmit = function(e) {
+    e.preventDefault();
+    fetch('{% url 'manage_proposal' proposal.id %}', {
+        method: 'POST',
+        body: new FormData(this),
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+        }
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Ошибка:', error));
+};
+</script>
+{% endblock %}

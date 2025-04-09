@@ -29,13 +29,6 @@ class Ad(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
-    # class Meta:
-    #     verbose_name = 'Объявление'
-    #     verbose_name_plural = 'Объявления'
-    #     ordering = ['-created_at']
-    #
-    # def __str__(self):
-    #     return f'{self.title} (ID: {self.id})'
 
 
     def __str__(self):
@@ -55,20 +48,8 @@ class ExchangeProposal(models.Model):
         ('rejected', 'Отклонено'),
         ('cancelled', 'Отменено')
     ]
-
-    # id = models.AutoField(primary_key=True)
-    ad_sender = models.ForeignKey(
-        Ad,
-        related_name='sent_proposals',
-        on_delete=models.CASCADE,
-        verbose_name='Объявление отправителя'
-    )
-    ad_receiver = models.ForeignKey(
-        Ad,
-        related_name='received_proposals',
-        on_delete=models.CASCADE,
-        verbose_name='Объявление получателя'
-    )
+    ad_sender = models.IntegerField()
+    ad_receiver = models.IntegerField()
     comment = models.TextField()
     status = models.CharField(
         max_length=20,
@@ -76,29 +57,97 @@ class ExchangeProposal(models.Model):
         default='pending',
         verbose_name='Статус'
     )
-    # created_at = models.DateTimeField(
-    #     # default=datetime.now(timezone.utc),
-    #     default=django.utils.timezone.now,
-    #     verbose_name='Дата создания'
-    # )
     created_at = models.DateTimeField(
         auto_now_add=True,  # Используем auto_now_add вместо default
         verbose_name='Дата создания'
     )
-    # class Meta:
-    #     verbose_name = 'Предложение обмена'
-    #     verbose_name_plural = 'Предложения обмена'
-    #     ordering = ['-created_at']
 
     def __str__(self):
-        return f'Предложение обмена: {self.ad_sender.title} <-> {self.ad_receiver.title}'
+        return
 
-    # def clean(self):
-    #     if self.ad_sender == self.ad_receiver:
-    #         raise ValidationError('Объявления отправителя и получателя не могут быть одинаковыми')
-    #     if ExchangeProposal.objects.filter(
-    #         ad_sender=self.ad_sender,
-    #         ad_receiver=self.ad_receiver,
-    #         status='pending'
-    #     ).exists():
-    #         raise ValidationError('Предложение обмена уже существует')
+
+
+
+
+
+
+
+
+# class ExchangeProposal(models.Model):
+#     """
+#     Модель предложения обмена
+#     """
+#     STATUS_CHOICES = [
+#         ('pending', 'В ожидании'),
+#         ('accepted', 'Принято'),
+#         ('rejected', 'Отклонено'),
+#         ('cancelled', 'Отменено')
+#     ]
+#
+#     # id = models.AutoField(primary_key=True)
+#     ad_sender = models.ForeignKey(
+#         Ad,
+#         related_name='sent_proposals',
+#         on_delete=models.CASCADE,
+#         verbose_name='Объявление отправителя'
+#     )
+#     ad_receiver = models.ForeignKey(
+#         Ad,
+#         related_name='received_proposals',
+#         on_delete=models.CASCADE,
+#         verbose_name='Объявление получателя'
+#     )
+#     comment = models.TextField()
+#     status = models.CharField(
+#         max_length=20,
+#         choices=STATUS_CHOICES,
+#         default='pending',
+#         verbose_name='Статус'
+#     )
+#
+#     created_at = models.DateTimeField(
+#         auto_now_add=True,  # Используем auto_now_add вместо default
+#         verbose_name='Дата создания'
+#     )
+#
+#     def __str__(self):
+#         return f'Предложение обмена: {self.ad_sender.title} <-> {self.ad_receiver.title}'
+
+
+
+
+
+
+
+    #
+    # def get_status_display(self):
+    #     """Получить отображаемое значение статуса"""
+    #     return dict(self.STATUS_CHOICES)[self.status]
+    #
+    # def can_be_modified(self):
+    #     """Проверить, можно ли изменить статус предложения"""
+    #     return self.status == 'pending'
+    #
+    # def accept(self):
+    #     """Принять предложение обмена"""
+    #     if self.can_be_modified():
+    #         self.status = 'accepted'
+    #         self.save()
+    #         return True
+    #     return False
+    #
+    # def reject(self):
+    #     """Отклонить предложение обмена"""
+    #     if self.can_be_modified():
+    #         self.status = 'rejected'
+    #         self.save()
+    #         return True
+    #     return False
+    #
+    # def cancel(self):
+    #     """Отменить предложение обмена"""
+    #     if self.can_be_modified():
+    #         self.status = 'cancelled'
+    #         self.save()
+    #         return True
+    #     return False

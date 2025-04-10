@@ -28,5 +28,5 @@ python manage.py test
 
 
 
-![Uploading 1.png…](https://github.com/SergeyTsVL/TZ_vacancy/blob/main/images/1.png)
+![Uploading 1.png…](https://github.com/SergeyTsVL/Effective_Mobile_Junior_Python/blob/main/images/1.png)
 

@@ -196,7 +196,6 @@ def edit_exc(request, pk):
     ads = ExchangeProposal.objects.get(pk=pk)
     if request.method == "POST":
         form = ExchangeProposalForm(request.POST, request.FILES, instance=ads)
-        print(form.is_valid())
         if form.is_valid():
             form.save()
             # Перенаправляет на страницу с сохраненными исправлениями.

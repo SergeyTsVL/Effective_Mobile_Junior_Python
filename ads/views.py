@@ -1,6 +1,3 @@
-from urllib import request
-
-# from django.core.checks import messages
 from django.views.generic import TemplateView, ListView
 from django.db.models import Q
 from django.contrib import messages
@@ -165,7 +162,6 @@ def add_proposal(request):
     """
     Вызывает страницу advertisement_list.html.
     """
-
     exc = ExchangeProposal.objects.all()
     return render(request, 'ads_ads/manage_proposal.html', {'exc': exc})
 
@@ -178,7 +174,7 @@ def profile(request):
 @login_required
 def ad_list(request):
     ads = Ad.objects.all()
-    paginator = Paginator(ads, 2)  # 6 объявлений на странице
+    paginator = Paginator(ads, 3)  # 6 объявлений на странице
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -186,10 +182,29 @@ def ad_list(request):
         'page_obj': page_obj
     })
 
+@login_required  # Проверяет регистрацию пользователя
+def edit_exc(request, pk):
+    """
+    Этот метод считывает данные объектов из класса Advertisement, проверяет были ли запрос "POST", обрабатывает
+    данные формы, если все поля заполнены полностью, корректны и содержат все необходимые данные. Затем, при
+    редактировании, автоматически устанавливает автора как текущего авторизованного пользователя. Если запроса "POST"
+    не было, то возвращаемся к предыдущей странице без изменений.
+    :param request:
+    :param pk:
+    :return:
+    """
+    ads = ExchangeProposal.objects.get(pk=pk)
+    if request.method == "POST":
+        form = ExchangeProposalForm(request.POST, request.FILES, instance=ads)
+        print(form.is_valid())
+        if form.is_valid():
+            form.save()
+            # Перенаправляет на страницу с сохраненными исправлениями.
+            return redirect('ads:add_proposal')
+    else:
+        # вызов функции которая отобразит в браузере указанный шаблон с данными формы и объявления.
+        form = ExchangeProposalForm(instance=ads)
+    return render(request, 'ads_ads/edit_exc.html',
+                  {'form': form, 'ads': ads})
 
-    # posts = Ad.objects.all().order_by('-created_at')
-    # paginator = Paginator(posts, 3)
-    # page_number = request.GET.get('page')
-    # ads = paginator.get_page(page_number)
-    # return render(request, 'ads_ads/ad_list.html', {'page_obj': ads})
 

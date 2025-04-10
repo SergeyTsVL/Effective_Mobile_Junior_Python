@@ -19,5 +19,5 @@ urlpatterns = [
     path('create_proposal', views.create_proposal, name='create_proposal'),
     path('add_proposal', views.add_proposal, name='add_proposal'),
     path('profile/', views.logout_view, name='logout_view'),
-    # path('', views.index, name='index'),
+    path('edit_exc/<int:pk>/', views.edit_exc, name='edit_exc'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

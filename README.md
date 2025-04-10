@@ -1,4 +1,5 @@
 #  Описание проекта "Effective_Mobile_Junior_Python" 
+Python 3.10
 
 # Создание проекта
 django-admin startproject project .

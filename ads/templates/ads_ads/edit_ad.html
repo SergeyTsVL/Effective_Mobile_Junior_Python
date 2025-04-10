@@ -2,7 +2,7 @@
 
 {% block content %}
 <h2>Редактирование объявления</h2>
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% if request.user.is_authenticated %}
         {% csrf_token %}
         {{ form.non_field_errors }}
@@ -13,6 +13,10 @@
         <div class="fieldWrapper">
             <label>Заголовок: </label>
             {{ form.title }}
+        </div>
+        <div class="fieldWrapper">
+            <label>Изображение: </label>
+            {{ form.image_url }}
         </div>
         <div class="fieldWrapper">
             <label>Описание: </label>

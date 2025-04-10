@@ -3,6 +3,9 @@
 {% block content %}
 <h1>{{ ad.title }}</h1>
 <p>{{ ad.description }}</p>
+{% if ad.image_url %}
+    <img src=" {{ ad.image_url.url }}" alt="{{ ad.title }}" style="max-width: 100%; height: auto;">
+{% endif %}
 <div style="display:flex; flex-direction:column">
     <span>
         <a href="{% url 'ads:edit_ad' ad.pk %}"><button type="submit">Редактировать</button></a>

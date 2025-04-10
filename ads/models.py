@@ -16,7 +16,7 @@ class Ad(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ads')   # created_name
     title = models.TextField()
     description = models.TextField()
-    image_url = models.URLField(max_length=200, blank=True, null=True)
+    image_url = models.ImageField(upload_to='images/', blank=True, null=True)
     category = models.TextField()
     status = models.CharField(
         max_length=20,

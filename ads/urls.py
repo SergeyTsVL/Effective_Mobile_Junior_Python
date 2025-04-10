@@ -1,6 +1,9 @@
 from django.urls import path
+
+from django.conf import settings
 from . import views
 from .views import SearchResultsView, HomePageView
+from django.conf.urls.static import static
 
 
 app_name = 'ads'
@@ -16,4 +19,5 @@ urlpatterns = [
     path('create_proposal', views.create_proposal, name='create_proposal'),
     path('add_proposal', views.add_proposal, name='add_proposal'),
     path('profile/', views.logout_view, name='logout_view'),
-]
+    # path('', views.index, name='index'),
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
